@@ -1,0 +1,37 @@
+.dashboard {
+    height: 100vh;
+    background-color: #121212;
+    padding-bottom: 120px;
+}
+
+.dashboard input {
+    background-color: #282828;
+    border: none;
+}
+
+.dashboard button {
+    color: #fafafa;
+    border: none;
+    background-color: #1d8974;
+}
+
+.dashboard input::placeholder {
+    color: #fafafa;
+}
+
+.dashboard input:focus {
+    background-color: #282828;
+    color: #fafafa;
+}
+
+.dashboard .table-dark {
+    --bs-table-color: #fff;
+    --bs-table-bg: #282828 !important;
+    --bs-table-border-color: #4d5154 !important;
+    --bs-table-striped-bg: #3f3f3f !important;
+}
+
+.dashboard table {
+    border-radius: 10px;
+    overflow: hidden;
+}
