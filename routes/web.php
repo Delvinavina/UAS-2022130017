@@ -14,3 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::view('/', 'index')->name('home');
+Route::view('/hotel', 'hotel_list')->name('hotels');
+Route::view('/admin', 'admin.dashboard')->name('admin');
