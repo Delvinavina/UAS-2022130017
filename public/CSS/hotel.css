@@ -1,0 +1,61 @@
+.hotels {
+    height: 100%;
+    background-color: #121212;
+    padding-bottom: 120px;
+}
+
+.hotels-list {
+    width: 100%;
+}
+
+.hotels-list .card {
+    width: 340px;
+    color: #fafafa;
+    background-color: #282828;
+}
+
+.hotels-list .card img {
+    width: 100%;
+}
+
+.hotels-header input {
+    background-color: #282828;
+    border: none;
+}
+
+.hotels-header button {
+    color: #fafafa;
+    border: none;
+    background-color: #1d8974;
+}
+
+.hotels-header input::placeholder {
+    color: #fafafa;
+}
+
+.hotels-header input:focus {
+    background-color: #282828;
+    color: #fafafa;
+}
+
+.hotels-list .card .card-rating {
+    color: #fafafa;
+}
+
+.hotels-list .card h5 {
+    padding: 0;
+    margin: 0;
+}
+
+.hotels-list .card small,
+.hotels-list .card p {
+    color: #fafafabc;
+    font-size: 0.9rem;
+}
+
+.hotels-list .card button {
+    color: #fafafa;
+    background-color: #1d8974;
+    margin-top: 8px;
+    width: 100%;
+}
