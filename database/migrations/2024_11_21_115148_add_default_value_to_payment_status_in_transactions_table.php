@@ -12,17 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('transactions', function (Blueprint $table) {
-            //
+            $table->string('payment_status')->default('Pending')->change();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('transactions', function (Blueprint $table) {
-            //
+            $table->string('payment_status')->change();
         });
     }
 };
