@@ -3,62 +3,55 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Hotel;
+use App\Http\Requests\SaveHotelRequest;
 
 class HotelController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    public function hotel(){
+
+        return view('hotels.hotel', [
+            'hotels' => Hotel::paginate(8)
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function create(){
+        return view('hotels.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    public function store(SaveHotelRequest $request){
+
+
+        Hotel::create($request->validated());
+        return redirect()->route('hotels');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+    public function show(Hotel $hotel){
+
+
+        $hotel->load('rooms');
+
+        return view('hotels.show', compact('hotel'));
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+    public function edit(Hotel $hotel){
+
+        return view('hotels.edit', compact('hotel'));
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(SaveHotelRequest $request, Hotel $hotel){
+        $hotel->update($request->validated());
+
+        return redirect()->route('hotel.show', $hotel);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+    public function delete(Hotel $hotel){
+
+        $hotel->delete();
+
+        return redirect()->route('hotels')->with('status', 'Hotel Deleted');
+
     }
 }
