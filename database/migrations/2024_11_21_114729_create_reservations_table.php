@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('room_id');
+            $table->date('check_in_date');
+            $table->date('check_out_date');
+            $table->string('status')->default('Pending');
             $table->timestamps();
         });
     }
