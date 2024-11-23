@@ -3,62 +3,82 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class AuthController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function showRegister()
     {
-        //
+        if (Auth::check()) {
+            return redirect()->route('home');
+        }
+        
+        return view('auth.register');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function register(Request $request)
     {
-        //
+        
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role ?? 'user',
+        ]);
+
+        return redirect()->route('login')->with('success', 'Registration successful. Please login.');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+
+    public function showLogin()
     {
-        //
+        if (Auth::check()) {
+            return redirect()->route('home');
+        }
+        return view('auth.login');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+public function login(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|min:6',
+    ]);
+
+
+    if (Auth::attempt($request->only('email', 'password'))) {
+        $user = Auth::user();
+        
+        return $this->redirectBasedOnRole($user);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+    return back()->withErrors(['email' => 'Invalid credentials'])->withInput();
+}
+
+protected function redirectBasedOnRole($user)
+{
+    if ($user->role === 'admin') {
+        return redirect()->route('admin.dashboard')->with('success', 'Login successful as admin.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+    if ($user->role === 'user') {
+        return redirect()->route('home')->with('success', 'Login successful as user.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    return redirect()->route('login')->withErrors(['access' => 'You do not have access to this page.']);
+}
+
+    public function logout()
     {
-        //
+        Auth::logout();
+        return redirect()->route('login')->with('success', 'You have been logged out.');
     }
 }
