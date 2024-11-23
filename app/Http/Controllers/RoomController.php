@@ -14,19 +14,19 @@ class RoomController extends Controller
      */
     public function index()
     {
-        $rooms = Room::paginate(8);  // Ambil semua data room
-        return view('rooms.room', compact('rooms'));  // Tampilkan di view
+        $rooms = Room::paginate(8);  
+        return view('rooms.room', compact('rooms'));  
     }
 
     public function store(Request $request)
     {
-        // Validasi input
+       
         $request->validate([
             'room_name' => 'required|string|max:255',
-            'hotel_id' => 'required|exists:hotels,id', // Pastikan hotel_id valid dan ada di tabel hotels
+            'hotel_id' => 'required|exists:hotels,id', 
         ]);
 
-        // Menyimpan data room baru
+      
         $room = new Room();
         $room->room_name = $request->room_name;
         $room->hotel_id = $request->hotel_id;
@@ -36,15 +36,12 @@ class RoomController extends Controller
 
     public function create()
     {
-        $hotels = Hotel::all();  // Ambil semua data hotel
-        return view('rooms.create', compact('hotels'));  // Kirim data hotel ke view
+        $hotels = Hotel::all();  
+        return view('rooms.create', compact('hotels'));  
     }
 
     public function show(Room $room){
 
-        // $hotels = Hotel::where('id', $id)->get();
-        // $hotels = Hotel::findOrFail(id: $id);
-        // $hotels = Hotel::findOrFail(id: $id);
 
         return view('rooms.show', compact('room'));
 
@@ -52,8 +49,7 @@ class RoomController extends Controller
 
     public function edit(Room $room){
 
-        // $hotels = Hotel::where('id', $id)->get();
-        // $hotels = Hotel::findOrFail(id: $id);
+
 
         return view('rooms.edit', compact('room'));
 
