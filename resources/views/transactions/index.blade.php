@@ -7,33 +7,31 @@
         @endif
 
         <h2 class="text-white">Transactions</h2>
-        <div class="d-flex gap-2">
-
-            @foreach ($transactions as $transaction)
-                <div class="card text-bg-dark" style="width: 18rem;">
-                    <div class="card-body">
-                        <h4>Room: {{ $transaction->room->room_name }}</h4>
-                        <p>Check-in: {{ $transaction->check_in_date }}</p>
-                        <p>Check-out: {{ $transaction->check_out_date }}</p>
-                        <p>Payment Status: {{ $transaction->payment_status }}</p>
-                        <p>Transaction Status: {{ $transaction->status }}</p>
-
-                        @if ($transaction->payment_status === 'Pending')
-                            <form action="{{ route('transactions.pay', $transaction->id) }}" method="POST">
-                                @csrf
-                                <button class="btn btn-success">Pay Now</button>
-                            </form>
-                        @endif
-
-                        @if ($transaction->payment_status === 'Paid' && $transaction->status !== 'Checked Out')
-                            <form action="{{ route('transactions.checkout', $transaction->id) }}" method="POST">
-                                @csrf
-                                <button class="btn btn-primary">Checkout</button>
-                            </form>
-                        @endif
-                    </div>
-                </div>
-            @endforeach
-        </div>
+        <form method="POST" action="{{ route('transactions.store', $reservation->id) }}">
+            @csrf
+            <div class="mb-3 text-white">
+                <label for="exampleInputEmail1" class="form-label">Nama Kamar</label>
+                <input class="form-control" id="disabledInput" type="text" name="reser_id"
+                    value="{{ $reservation->room->room_name }}"
+                    placeholder="{{ old('reser_id', $reservation->room->room_name) }}" disabled>
+            </div>
+            <div class="mb-3 text-white">
+                <label for="exampleInputEmail1" class="form-label">Harga Kamar</label>
+                <input class="form-control" id="disabledInput" type="text" name="room_price"
+                    value="{{ $reservation->room->room_price }}"
+                    placeholder="{{ old('reser_id', $reservation->room->room_price) }}" disabled>
+            </div>
+            <input type="hidden" name="reser_id" value="{{ $reservation->id }}">
+            <input type="hidden" name="room_price" value="{{ $reservation->room->room_price }}">
+            <div class="mb-3 text-white">
+                <label for="method" class="form-label text-white">Metode Bayar:</label>
+                <select class="form-select" id="method" name="method" required>
+                    @foreach ($payment_methods as $method)
+                        <option value="{{ $method->method_name }}">{{ $method->method_name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <button type="submit" class="btn card-btn fw-2">Submit</button>
+        </form>
     </section>
 </x-layout>

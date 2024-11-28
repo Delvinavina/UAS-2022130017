@@ -10,9 +10,20 @@
 </head>
 
 <body>
+
     <section class="login d-flex align-items-center" style="width: 100%; height: 100vh;">
         <div class="container card" style="width: 30%;">
             <h1>Login</h1>
+            <!-- General Error Message -->
+            @if ($errors->any())
+                <div class="alert alert-danger mt-3">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <form action="{{ route('login') }}" method="POST">
                 @csrf
                 <div class="mb-3">

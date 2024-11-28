@@ -27,6 +27,11 @@
                         name="email" value="{{ old('email') }}">
                 </div>
                 <div class="mb-3">
+                    <label for="exampleInputEmail2" class="form-label">Phone Number</label>
+                    <input type="text" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp"
+                        name="phone_number" value="{{ old('phone_number') }}">
+                </div>
+                <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Password</label>
                     <input type="password" class="form-control" id="exampleInputPassword1" name="password">
                 </div>

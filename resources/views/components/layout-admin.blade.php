@@ -17,7 +17,7 @@
 <body>
     <nav class="navbar navbar-expand-lg custom-container py-3 full-width" style="background-color: none; z-index: 3;">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold text-light" href="{{ route('home') }}">LOGO</a>
+            <a class="navbar-brand fw-bold text-light" href="{{ route('admin.dashboard') }}">LOGO</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#myNavbarNav"
                 aria-controls="myNavbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -26,13 +26,20 @@
                 <div class="d-flex justify-content-between" style="width: 100%">
                     <ul class="navbar-nav d-flex justify-content-between custom-gap">
                         <li class="nav-item">
-                            <a class="nav-link custom-color" aria-current="page" href="{{ route('hotels') }}">Guest</a>
+                            <a class="nav-link custom-color" aria-current="page"
+                                href="{{ route('admin.guests') }}">Guest</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link custom-color" href="#">Property</a>
+                            <a class="nav-link custom-color" href="{{ route('admin.hotels') }}">Hotels</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link custom-color" href="#">Category</a>
+                            <a class="nav-link custom-color" href="{{ route('admin.rooms') }}">Rooms</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link custom-color" href="{{ route('admin.transactions') }}">Transactions</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link custom-color" href="{{ route('admin.reservations') }}">Reservations</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav d-flex custom-gap">
@@ -43,12 +50,12 @@
                                     <i class="bi bi-list"></i>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Account</a></li>
-                                    <li><a class="dropdown-item" href="#">Settings</a></li>
                                     <li>
-                                        <hr class="dropdown-divider">
+                                        <form action="{{ route('logout') }}" method="POST">
+                                            @csrf
+                                            <button class="dropdown-item" type="submit">Logout</button>
+                                        </form>
                                     </li>
-                                    <li><a class="dropdown-item" href="#">Logout</a></li>
                                 </ul>
                             </div>
                         </li>

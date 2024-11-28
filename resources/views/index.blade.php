@@ -19,17 +19,18 @@
                             <a href="{{ route('hotels') }}" class="reset-list">Hotels</a>
                         </li>
                         <li>
-                            <a href="#" class="reset-list">Rooms</a>
+                            <a href="{{ route('hotels') }}" class="reset-list">Rooms</a>
                         </li>
                         <li>
-                            <a href="#" class="reset-list">Flats</a>
+                            <a href="{{ route('hotels') }}" class="reset-list">Flats</a>
                         </li>
                         <li>
-                            <a href="#" class="reset-list">Villas</a>
+                            <a href="{{ route('hotels') }}" class="reset-list">Villas</a>
                         </li>
                     </ul>
                     <div class="search-form">
-                        <form action="" class="d-flex align-items-center justify-content-evenly custom-gap-2">
+                        <form action="{{ route('hotels') }}"
+                            class="d-flex align-items-center justify-content-evenly custom-gap-2">
                             <div class="form-content">
                                 <div class="text-start">
                                     <label class="text-start">Location</label>

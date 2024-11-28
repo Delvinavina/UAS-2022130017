@@ -29,17 +29,13 @@
                             <a class="nav-link custom-color" aria-current="page" href="{{ route('hotels') }}">Find a
                                 Hotel</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link custom-color" href="#">About Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link custom-color" href="#">Contact</a>
-                        </li>
                     </ul>
                     <ul class="navbar-nav d-flex custom-gap">
                         <li class="nav-item">
-                            <button type="button" class="btn" style="background-color: #1d8974">
-                                <span class="fw-medium text-light"> Become a Host </span>
+                            <button class="btn" style="background-color: #1d8974">
+                                @auth
+                                    <span class="fw-medium text-light"> {{ Auth::user()->name }} </span>
+                                @endauth
                             </button>
                         </li>
                         <li class="nav-item">
@@ -49,12 +45,17 @@
                                     <i class="bi bi-list"></i>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Account</a></li>
-                                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('reservations.index') }}">Booking</a>
+                                    </li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item" href="#">Logout</a></li>
+                                    <li>
+                                        <form action="{{ route('logout') }}" method="POST">
+                                            @csrf
+                                            <button class="dropdown-item" type="submit">Logout</button>
+                                        </form>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
@@ -64,7 +65,12 @@
         </div>
     </nav>
 
+    @if (session('status'))
+        <div>{{ session('status') }}</div>
+    @endif
+
     {{ $slot }}
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">

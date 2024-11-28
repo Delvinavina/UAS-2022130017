@@ -2,31 +2,40 @@
     <section class="hotels custom-container nav-margin">
         <div class="hotels-header">
             <p class="fs-2 text-light fw-bold">Hotel List</p>
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Recipient's username"
-                    aria-label="Recipient's username" aria-describedby="button-addon2">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i
-                        class="bi bi-search"></i></button>
-            </div>
+            <form action="{{ route('hotels') }}" method="GET" class="mb-4">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="Cari User Disini"
+                        aria-describedby="button-addon2" value="{{ $keyword ?? '' }}">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </form>
         </div>
         <div class="hotels-list">
-            <div class="d-flex flex-wrap justify-content-center custom-gap">
-                @foreach ($hotels as $hotel)
-                    <div class="card mb-2">
-                        <img src="{{ asset('Image/hotel-content-1.jpg') }}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $hotel->hotel_name }}</h5>
-                            <p class="card-title">{{ $hotel->hotel_address }}</p>
-                            <div class="card-rating d-flex custom-gap-12">
-                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
-                                <small class="ps-1">4.5 Rating</small>
+
+            <div class="card-group">
+                <div class="row w-100">
+                    @foreach ($hotels as $hotel)
+                        <div class="col-md-3 pb-2">
+                            <div class="card mb-2">
+                                @if ($hotel->image)
+                                    <img src="{{ Storage::url($hotel->image) }}" class="card-img-top"
+                                        alt="{{ $hotel->hotel_name }}">
+                                @else
+                                    <img src="{{ asset('Image/hotel-content-1.jpg') }}" class="card-img-top"
+                                        alt="Default Image">
+                                @endif
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $hotel->hotel_name }}</h5>
+                                    <p class="card-title">{{ $hotel->hotel_address }}</p>
+                                    <a href="{{ route('hotel.show', $hotel->id) }}" class="btn fw-medium" type="button"
+                                        id="button-addon2">Book a Room</a>
+                                </div>
                             </div>
-                            <a href="{{ route('hotel.show', $hotel->id) }}" class="btn fw-medium" type="button"
-                                id="button-addon2">Book a Room</a>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
             </div>
             {{ $hotels->links() }}
         </div>
