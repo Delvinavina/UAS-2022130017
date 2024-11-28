@@ -13,10 +13,6 @@ return new class extends Migration
     {
         Schema::create('hotel', function (Blueprint $table) {
             $table->id();
-            $table->string('hotel_name', 100);
-            $table->string('hotel_address', 255);
-            $table->string('hotel_contact', 25);
-            $table->string('hotel_desc', 255)->nullable()->default('This is Hotel Description');
             $table->timestamps();
         });
     }
