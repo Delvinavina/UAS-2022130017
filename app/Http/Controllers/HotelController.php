@@ -8,50 +8,28 @@ use App\Http\Requests\SaveHotelRequest;
 
 class HotelController extends Controller
 {
-    public function hotel(){
+    public function hotel(Request $request)
+    {
 
-        return view('hotels.hotel', [
-            'hotels' => Hotel::paginate(8)
-        ]);
-    }
+        
+        $keyword = $request->input('search');
 
-    public function create(){
-        return view('hotels.create');
-    }
+        $hotels = Hotel::when($keyword, function ($query, $keyword) {
+            $query->where('hotel_name', 'LIKE', "%{$keyword}%");
+        })->paginate(8);
 
-    public function store(SaveHotelRequest $request){
+        $hotels->appends(['search' => $keyword]);
 
-
-        Hotel::create($request->validated());
-        return redirect()->route('hotels');
+        return view('hotels.hotel', compact('hotels', 'keyword'));
     }
 
     public function show(Hotel $hotel){
 
-
-        $hotel->load('rooms');
+        $hotel = Hotel::with(['rooms' => function ($query) {
+            $query->where('room_status', 'available');
+        }])->findOrFail($hotel->id);
 
         return view('hotels.show', compact('hotel'));
-
-    }
-
-    public function edit(Hotel $hotel){
-
-        return view('hotels.edit', compact('hotel'));
-
-    }
-
-    public function update(SaveHotelRequest $request, Hotel $hotel){
-        $hotel->update($request->validated());
-
-        return redirect()->route('hotel.show', $hotel);
-    }
-
-    public function delete(Hotel $hotel){
-
-        $hotel->delete();
-
-        return redirect()->route('hotels')->with('status', 'Hotel Deleted');
 
     }
 }

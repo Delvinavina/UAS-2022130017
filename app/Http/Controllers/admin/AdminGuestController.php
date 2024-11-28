@@ -8,13 +8,20 @@ use Illuminate\Http\Request;
 
 class AdminGuestController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $keyword = $request->input('search');
 
-        return view('admin.guests.index', [
-            'users' => User::paginate(8)
-        ]);
+        $users = User::when($keyword, function ($query, $keyword) {
+            $query->where('name', 'LIKE', "%{$keyword}%")
+                ->orWhere('email', 'LIKE', "%{$keyword}%");
+        })->paginate(8);
+
+        $users->appends(['search' => $keyword]);
+
+        return view('admin.guests.index', compact('users', 'keyword'));
     }
+
 
     public function edit(User $user)
     {
@@ -27,12 +34,15 @@ class AdminGuestController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
+            'phone_number' => 'required|numeric',
+            'role' => 'required|in:admin,user',
         ]);
 
-        $user->update($request->only('name', 'email'));
+        $user->update($request->only('name', 'email', 'phone_number', 'role'));
 
         return redirect()->route('admin.guests')->with('success', 'User updated successfully!');
     }
+
 
     public function delete(User $user){
 

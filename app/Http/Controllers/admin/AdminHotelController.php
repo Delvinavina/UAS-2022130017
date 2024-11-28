@@ -4,25 +4,41 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Hotel;
+use Illuminate\Http\Request;
 use App\Http\Requests\SaveHotelRequest;
+use Illuminate\Support\Facades\Storage;
 
 class AdminHotelController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $keyword = $request->input('search');
 
-        return view('admin.hotels.index', [
-            'hotels' => Hotel::paginate(8)
-        ]);
+        $hotels = Hotel::when($keyword, function ($query, $keyword) {
+            $query->where('hotel_name', 'LIKE', "%{$keyword}%");
+        })->paginate(8);
+
+        $hotels->appends(['search' => $keyword]);
+
+        return view('admin.hotels.index', compact('hotels', 'keyword'));
     }
 
     public function create(){
         return view('admin.hotels.create');
     }
     
-    public function store(SaveHotelRequest $request){
-        Hotel::create($request->validated());
-        return redirect()->route('admin.hotels');
+    public function store(SaveHotelRequest $request)
+    {
+        $validatedData = $request->validated(); 
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('hotels', 'public');
+            $validatedData['image'] = $imagePath;
+        }
+
+        Hotel::create($validatedData);
+
+        return redirect()->route('admin.hotels')->with('success', 'Hotel Created successfully!');
     }
 
     public function edit(Hotel $hotel){
@@ -31,11 +47,24 @@ class AdminHotelController extends Controller
 
     }
 
-    public function update(SaveHotelRequest $request, Hotel $hotel){
-        $hotel->update($request->validated());
-
-        return redirect()->route('admin.hotels', $hotel);
+    public function update(SaveHotelRequest $request, Hotel $hotel)
+    {
+        $validatedData = $request->validated();
+    
+        if ($request->hasFile('image')) {
+            if ($hotel->image) {
+                Storage::disk('public')->delete($hotel->image);
+            }
+    
+            $imagePath = $request->file('image')->store('hotels', 'public');
+            $validatedData['image'] = $imagePath;
+        }
+    
+        $hotel->update($validatedData);
+    
+        return redirect()->route('admin.hotels')->with('success', 'hotel updated successfully!');
     }
+    
 
     public function delete(Hotel $hotel){
 
