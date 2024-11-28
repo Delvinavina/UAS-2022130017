@@ -1,10 +1,26 @@
 <x-layout-admin>
     <section class="dashboard custom-container nav-margin">
+
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <div class="dashboard-header">
             <p class="fs-2 text-light fw-bold">Dashboard Hotels</p>
         </div>
         <div class="dashboard-content">
-            <a class="btn btn-secondary mb-3" href="{{ route('admin.hotels.create') }}">Tambah Data</a>
+            <form action="{{ route('admin.hotels') }}" method="GET" class="mb-4">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="Find hotel name here"
+                        aria-describedby="button-addon2" value="{{ $keyword ?? '' }}">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </form>
+            <a class="btn card-btn fw-2 mb-3" href="{{ route('admin.hotels.create') }}">Add Data</a>
             <table class="table table-dark table-striped table-hover">
                 <thead>
                     <tr>
