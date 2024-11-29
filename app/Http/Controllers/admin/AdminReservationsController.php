@@ -13,7 +13,7 @@ class AdminReservationController extends Controller
         
         $keyword = $request->input('search');
     
-        
+       
         $reservations = Reservation::with(['user', 'room'])
             ->when($keyword, function ($query, $keyword) {
                 $query->whereHas('user', function ($q) use ($keyword) {
@@ -27,7 +27,7 @@ class AdminReservationController extends Controller
         
         $reservations->appends(['search' => $keyword]);
     
-
+       
         return view('admin.reservations.index', compact('reservations', 'keyword'));
     }
     

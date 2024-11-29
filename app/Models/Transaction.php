@@ -10,20 +10,12 @@ class Transaction extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
-        'room_id',
-        'check_in_date',
-        'check_out_date',
+        'reser_id',
         'total_price',
-        'status',
-        'payment_status',
+        'method'
     ];
 
-    protected $attributes = [
-        'payment_status' => 'Pending', 
-    ];
-
-    // Relasi ke User
+    // Relasi ke Room
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -33,5 +25,10 @@ class Transaction extends Model
     public function room()
     {
         return $this->belongsTo(Room::class, 'room_id', 'room_id');
+    }
+
+    public function reservation()
+    {
+        return $this->belongsTo(Room::class, 'reser_id', 'reser_id');
     }
 }

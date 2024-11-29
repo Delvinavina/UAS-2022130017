@@ -13,7 +13,7 @@ class AdminTransactionController extends Controller
        
         $transactions = Transaction::with(['user', 'room'])->paginate(8);
 
-       
+        
         return view('admin.transactions.index', compact('transactions'));
     }
 }
