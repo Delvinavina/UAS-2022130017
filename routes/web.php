@@ -9,8 +9,8 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\admin\AdminHotelController;
 use App\Http\Controllers\admin\AdminGuestController;
 use App\Http\Controllers\admin\AdminRoomController;
-use App\Http\Controllers\admin\AdminReservationController;
-use App\Http\Controllers\admin\AdminTransactionController;
+use App\Http\Controllers\admin\AdminReservationsController;
+use App\Http\Controllers\admin\AdminTransactionsController;
 use Illuminate\Support\Facades\Auth;
 
 // Route Auth
@@ -52,8 +52,8 @@ Route::middleware(['auth'])->group(function () {
         Route::patch('/room/{room}', [AdminRoomController::class, 'update'])->name('admin.rooms.update');
         Route::delete('/room/{room}', [AdminRoomController::class, 'delete'])->name('admin.rooms.delete');
         
-        Route::get('/reservations', [AdminReservationController::class, 'index'])->name('admin.reservations');
-        Route::get('/transactions', [AdminTransactionController::class, 'index'])->name('admin.transactions');
+        Route::get('/reservations', [AdminReservationsController::class, 'index'])->name('admin.reservations');
+        Route::get('/transactions', [AdminTransactionsController::class, 'index'])->name('admin.transactions');
     });
 
     // Rute User (user dashboard)
