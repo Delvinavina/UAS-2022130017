@@ -59,3 +59,11 @@
     margin-top: 8px;
     width: 100%;
 }
+
+.card-group .btn,
+.hotels-list .card .btn {
+    color: #fafafa;
+    margin-top: 12px;
+    width: 100%;
+    background-color: #1d8974;
+}

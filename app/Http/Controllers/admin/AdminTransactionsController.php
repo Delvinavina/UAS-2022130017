@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 
-class AdminTransactionController extends Controller
+class AdminTransactionsController extends Controller
 {
     public function index()
     {
