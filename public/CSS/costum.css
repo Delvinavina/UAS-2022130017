@@ -5,6 +5,7 @@ body {
     font-optical-sizing: auto;
     font-weight: normal;
     font-style: normal;
+    background-color: #121212;
 
     padding: 0;
     margin: 0;
@@ -61,4 +62,34 @@ myColor {
 
 .nav-margin {
     padding-top: 100px;
+}
+
+.pagination .page-link {
+    color: #508d4e;
+    background-color: #f8f9fa;
+    border-color: transparent;
+}
+
+.pagination .page-link:hover {
+    background-color: #508d4e;
+    color: #fff;
+}
+
+.pagination .active .page-link {
+    background-color: #508d4e;
+    border-color: #508d4e;
+    color: white;
+}
+
+.limited-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-btn {
+    color: #fafafa;
+    background-color: #1d8974;
 }

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
 
-class AdminReservationController extends Controller
+class AdminReservationsController extends Controller
 {
     public function index(Request $request)
     {
